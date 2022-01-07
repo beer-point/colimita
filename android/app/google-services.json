@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "297203425325",
+    "project_id": "punta-beer",
+    "storage_bucket": "punta-beer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:297203425325:android:9c4cb8a0f866ce1212d8a4",
+        "android_client_info": {
+          "package_name": "uy.com.puntabeer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "297203425325-rha8gk3qic8970d74u6ar1cf6fialkgf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAQZPS51V2pz2zKZiadmlVG2Cut8CQ4CQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "297203425325-rha8gk3qic8970d74u6ar1cf6fialkgf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "297203425325-du9tean8pcdgplpl4t8b9g8na63qkttn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "uy.com.puntabeer"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -26,10 +26,35 @@
   <meta name="apple-mobile-web-app-title" content="colimita">
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
   <title>colimita</title>
   <link rel="manifest" href="manifest.json">
 </head>
 <body>
+
+  <script id="firebase-app" src="https://www.gstatic.com/firebasejs/8.6.1/firebase-app.js"></script>
+  <script id="firebase-messaging" src="https://www.gstatic.com/firebasejs/8.6.1/firebase-messaging.js"></script>
+  <script id="firebase-firestore" src="https://www.gstatic.com/firebasejs/8.6.1/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.1/firebase-auth.js"></script>
+  <script>
+  
+  var firebaseConfig = {
+    apiKey: "AIzaSyBzcvYpVD6Yg-IKkCOesI_1M1ql1wrF_MY",
+    authDomain: "punta-beer.firebaseapp.com",
+    projectId: "punta-beer",
+    storageBucket: "punta-beer.appspot.com",
+    messagingSenderId: "297203425325",
+    appId: "1:297203425325:web:94b6fc71f13ea90312d8a4",
+    measurementId: "G-EH34GLS4C8"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  </script>
+
+
+
   <!-- This script installs service_worker.js to provide PWA functionality to
        application. For more information, see:
        https://developers.google.com/web/fundamentals/primers/service-workers -->
