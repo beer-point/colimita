@@ -1,7 +1,6 @@
 import 'package:colimita/pages/auth/auth_provider.dart';
 import 'package:colimita/pages/auth/login/social_sign_in_button.dart';
 import 'package:colimita/pages/auth/use_auth_controller.dart';
-import 'package:colimita/pages/auth/use_auth_state.dart';
 import 'package:colimita/shared/use_replace_route_on_auth_change.dart';
 import 'package:colimita/widgets/app_typography.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +12,6 @@ class LoginPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final usernameInputController = useTextEditingController(text: '');
     final passwordInputController = useTextEditingController(text: '');
-    final authState = useAuthState(ref);
     final authController = useAuthController(ref);
     useReplaceRouteOnAuthChange(
       context,
@@ -43,77 +41,67 @@ class LoginPage extends HookConsumerWidget {
       authController.signInWithApple();
     }
 
-    void signInWithFacebook() {
-      authController.signInWithFacebook();
-    }
-
-    void signInAnonymously() {
-      authController.signInAnonymously();
-    }
-
     // final localizedStrings = AppLocalizations.of(context)!;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Column(
             children: [
-              Center(
-                child: SizedBox(
-                  width: screenWidth / 2,
-                  child: Image.asset('assets/logo.png'),
-                ),
-              ),
-              TextField(
-                controller: usernameInputController,
-                decoration: InputDecoration(
-                  labelText: 'Username',
-                ),
-              ),
-              TextField(
-                controller: passwordInputController,
-                decoration: InputDecoration(
-                  labelText: 'Contraseña',
-                ),
-              ),
+              Padding(
+                  padding: EdgeInsets.symmetric(vertical: 8),
+                  child: Column(
+                    children: [
+                      TextField(
+                        controller: usernameInputController,
+                        decoration: const InputDecoration(
+                          labelText: 'Username',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      TextField(
+                        controller: passwordInputController,
+                        decoration: const InputDecoration(
+                          labelText: 'Contraseña',
+                          border: OutlineInputBorder(),
+                        ),
+                      ),
+                    ],
+                  )),
               Container(
-                margin: EdgeInsets.only(top: 16),
+                margin: const EdgeInsets.only(top: 16),
                 child: ElevatedButton(
                   onPressed: onLogin,
-                  child: AppTypography.body(
-                    // localizedStrings.loginScreenLoginButton,
+                  child: Text(
                     'Ingresar',
-                    style: TextStyle(fontWeight: FontWeight.w900),
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 16),
+                margin: const EdgeInsets.only(top: 16),
                 child: ElevatedButton(
                   onPressed: goToSignup,
-                  child: AppTypography.body(
-                    // localizedStrings.loginScreenLoginButton,
+                  child: Text(
                     'Registrarse',
-                    style: TextStyle(fontWeight: FontWeight.w900),
                   ),
                 ),
               ),
               Container(
-                margin: EdgeInsets.only(top: 16),
-                child: ElevatedButton(
+                margin: const EdgeInsets.only(top: 16),
+                child: TextButton(
                   onPressed: goToForgotPassord,
                   child: AppTypography.body(
                     // localizedStrings.loginScreenLoginButton,
                     'Me olvide la contraseña',
-                    style: TextStyle(fontWeight: FontWeight.w900),
+                    style: const TextStyle(fontWeight: FontWeight.w900),
                   ),
                 ),
               ),
-              SocialSignInButton(
-                onPress: signInAnonymously,
-                socialProvider: SocialAuthProvider.anonymously,
-              ),
+              const Divider(),
               SocialSignInButton(
                 onPress: signInWithGoogle,
                 socialProvider: SocialAuthProvider.google,
@@ -122,19 +110,6 @@ class LoginPage extends HookConsumerWidget {
                 onPress: signInWithApple,
                 socialProvider: SocialAuthProvider.apple,
               ),
-              SocialSignInButton(
-                onPress: signInWithFacebook,
-                socialProvider: SocialAuthProvider.facebook,
-              ),
-              if (authState.user != null)
-                Container(
-                  margin: EdgeInsets.only(top: 16),
-                  child: AppTypography.body(
-                    // localizedStrings.loginScreenLoginButton,
-                    'Hola ${authState.user.toString()}',
-                    style: TextStyle(fontWeight: FontWeight.w900),
-                  ),
-                ),
             ],
           ),
         ),

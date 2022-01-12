@@ -5,11 +5,11 @@ import 'package:colimita/pages/beer/beer_page.dart';
 import 'package:colimita/pages/map/map_page.dart';
 import 'package:colimita/pages/payments/payments_page.dart';
 import 'package:colimita/pages/profile/profile_page.dart';
-import 'package:colimita/pages/session/session_page.dart';
+import 'package:colimita/pages/sessions/session_page.dart';
 import 'package:colimita/pages/splash_page.dart';
 import 'package:colimita/pages/tabs/tabs_page.dart';
+import 'package:colimita/pages/transaction/transaction_page.dart';
 import 'package:colimita/shared/properties.dart';
-import 'package:colimita/shared/push_notification_manager.dart';
 import 'package:colimita/theme/theme.dart';
 import 'package:colimita/widgets/errors_stream.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,9 +17,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'firebase_options.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   await Properties.readProperties();
   runApp(App());
 }
@@ -38,8 +42,8 @@ class BaseApp extends HookWidget {
   @override
   Widget build(BuildContext context) {
     useEffect(() {
-      final pushNotificationService = PushNotificationManager();
-      pushNotificationService.init();
+      // final pushNotificationService = PushNotificationManager();
+      // pushNotificationService.init();
 
       final subscription =
           errorMessageStreamController.stream.listen((errorMessage) {
@@ -81,6 +85,7 @@ class BaseApp extends HookWidget {
       '/payments': (context) => PaymentsPage(),
       '/profile': (context) => ProfilePage(),
       '/session': (context) => SessionPage(),
+      '/transaction': (context) => TransactionPage(),
     };
   }
 }

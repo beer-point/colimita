@@ -1,38 +1,22 @@
-import 'package:colimita/widgets/app_typography.dart';
+import 'package:colimita/callables.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer';
 import 'dart:io';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:vibration/vibration.dart';
 
-class QRScanPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Flutter Demo Home Page')),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            Navigator.of(context).push(MaterialPageRoute(
-              builder: (context) => const QRViewExample(),
-            ));
-          },
-          child: const Text('qrView'),
-        ),
-      ),
-    );
-  }
-}
+import 'loading_overlay.dart';
 
-class QRViewExample extends StatefulWidget {
-  const QRViewExample({Key? key}) : super(key: key);
+class QRScanPage extends StatefulWidget {
+  const QRScanPage({Key? key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _QRViewExampleState();
+  State<StatefulWidget> createState() => _QRScanPageState();
 }
 
-class _QRViewExampleState extends State<QRViewExample> {
+class _QRScanPageState extends State<QRScanPage> {
   Barcode? result;
   QRViewController? controller;
+  bool syncing = false;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   // In order to get hot reload to work we need to pause the camera if the platform
@@ -48,90 +32,39 @@ class _QRViewExampleState extends State<QRViewExample> {
 
   @override
   Widget build(BuildContext context) {
+    void handleClose() {
+      Navigator.pop(context);
+    }
+
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: <Widget>[
-          Expanded(flex: 4, child: _buildQrView(context)),
-          Expanded(
-            flex: 1,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  if (result != null)
-                    Text('Barcode Type: Data: ${result!.code}')
-                  else
-                    const Text('Scan a code'),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.toggleFlash();
-                              setState(() {});
-                            },
-                            child: FutureBuilder(
-                              future: controller?.getFlashStatus(),
-                              builder: (context, snapshot) {
-                                return Text('Flash: ${snapshot.data}');
-                              },
-                            )),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                            onPressed: () async {
-                              await controller?.flipCamera();
-                              setState(() {});
-                            },
-                            child: FutureBuilder(
-                              future: controller?.getCameraInfo(),
-                              builder: (context, snapshot) {
-                                if (snapshot.data != null) {
-                                  print(snapshot);
-                                  return Text('Camera facing');
-                                } else {
-                                  return const Text('loading');
-                                }
-                              },
-                            )),
-                      )
-                    ],
+          _buildQrView(context),
+          if (syncing) LoadingOverlay(),
+          SafeArea(
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: handleClose,
+                      icon: const Icon(Icons.close),
+                      iconSize: 32,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+                Text(
+                  '¡Escanea el codigo QR!',
+                  textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    fontSize: 32,
+                    color: Colors.white,
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.pauseCamera();
-                          },
-                          child: const Text('pause',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      ),
-                      Container(
-                        margin: const EdgeInsets.all(8),
-                        child: ElevatedButton(
-                          onPressed: () async {
-                            await controller?.resumeCamera();
-                          },
-                          child: const Text('resume',
-                              style: TextStyle(fontSize: 20)),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ),
+                )
+              ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -147,36 +80,50 @@ class _QRViewExampleState extends State<QRViewExample> {
     // we need to listen for Flutter SizeChanged notification and update controller
     return QRView(
       key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
+      onQRViewCreated: _onQRViewCreated(context),
       overlay: QrScannerOverlayShape(
-          borderColor: Colors.red,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+        borderColor: Colors.white,
+        borderRadius: 10,
+        borderLength: 20,
+        borderWidth: 5,
+        cutOutSize: scanArea,
+      ),
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
-    controller.scannedDataStream.listen((scanData) {
-      setState(() {
-        result = scanData;
-      });
-    });
-  }
+  void Function(QRViewController) _onQRViewCreated(BuildContext context) =>
+      (QRViewController controller) async {
+        setState(() {
+          this.controller = controller;
+        });
 
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('no Permission')),
-      );
-    }
-  }
+        final scannedData = await controller.scannedDataStream.first;
+        Vibration.vibrate(duration: 50);
+        try {
+          setState(() {
+            syncing = true;
+          });
+          controller.pauseCamera();
+
+          await syncWithStation(
+            {"code": scannedData.code, "stationId": 'B1UNaOTznfzZXgxxUTnc'},
+          );
+
+          controller.resumeCamera();
+          setState(() {
+            syncing = false;
+          });
+        } catch (e) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              behavior: SnackBarBehavior.floating,
+              backgroundColor: Colors.red,
+              content: Text('Codigo invalido'),
+            ),
+          );
+        }
+        Navigator.pop(context);
+      };
 
   @override
   void dispose() {

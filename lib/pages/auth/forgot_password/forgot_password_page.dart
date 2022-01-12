@@ -35,13 +35,13 @@ class ForgotPasswordPage extends HookConsumerWidget {
                 controller: emailInputController,
                 decoration: const InputDecoration(
                   labelText: 'Username',
+                  border: OutlineInputBorder(),
                 ),
               ),
               ElevatedButton(
                 onPressed: handleSendPasswordResetEmail,
-                child: AppTypography.body(
+                child: Text(
                   'Mandar mail',
-                  style: const TextStyle(fontWeight: FontWeight.w900),
                 ),
               ),
             ],

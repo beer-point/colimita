@@ -1,6 +1,7 @@
 import 'package:colimita/navigation/tabs_controller.dart';
 import 'package:colimita/navigation/tabs_navigator.dart';
 import 'package:colimita/pages/auth/auth_provider.dart';
+import 'package:colimita/pages/sessions/sessions_page.dart';
 import 'package:colimita/pages/tabs/qr_scan/qr_scan_page.dart';
 import 'package:colimita/pages/tabs/transactions/transactions_page.dart';
 import 'package:colimita/shared/use_replace_route_on_auth_change.dart';
@@ -16,8 +17,8 @@ class TabsPage extends HookConsumerWidget {
 
   final _tabOptions = <Widget>[
     HomePage(),
-    QRScanPage(),
-    TransactionsPage(),
+    const QRScanPage(),
+    SessionsPage(),
   ];
 
   @override
@@ -46,16 +47,16 @@ class TabsPage extends HookConsumerWidget {
               .copyWith(size: 30, color: theme.colorScheme.secondaryVariant),
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.home_outlined),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.camera),
-              label: 'Escanea',
+              icon: Icon(Icons.qr_code_scanner),
+              label: 'Escanea QR',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.receipt),
-              label: 'Transacciones',
+              icon: Icon(Icons.sports_bar_outlined),
+              label: 'Sessiones',
             ),
           ]);
     }

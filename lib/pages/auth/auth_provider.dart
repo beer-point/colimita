@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:colimita/domain/failure.dart';
 import 'package:colimita/domain/user.dart';
-import 'package:colimita/pages/auth/firebase_auth_repository.dart';
 import 'package:colimita/pages/auth/i_auth_repository.dart';
 import 'package:colimita/providers/auth_repository_provider.dart';
 import 'package:dartz/dartz.dart';

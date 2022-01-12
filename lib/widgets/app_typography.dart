@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-enum AppTypographyType { title, subtitle, caption, body }
+enum AppTypographyType { extraLargeTitle, title, subtitle, caption, body }
 
 /// A widget to represent different text styles.
 class AppTypography extends StatelessWidget {
@@ -9,6 +9,9 @@ class AppTypography extends StatelessWidget {
   final Key? key;
   final AppTypographyType typographyType;
   final TextStyle? style;
+
+  AppTypography.extraLargeTitle(this.text, {this.key, this.style})
+      : typographyType = AppTypographyType.extraLargeTitle;
 
   // TODO(lg): define all type of labels and add constructors for all of them.
   AppTypography.title(this.text, {this.key, this.style})
@@ -35,6 +38,8 @@ class AppTypography extends StatelessWidget {
 
   TextStyle? _getTextStyle(BuildContext context) {
     switch (typographyType) {
+      case AppTypographyType.extraLargeTitle:
+        return Theme.of(context).textTheme.headline1;
       case AppTypographyType.title:
         return Theme.of(context).textTheme.headline4;
       case AppTypographyType.subtitle:

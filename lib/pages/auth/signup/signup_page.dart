@@ -34,19 +34,20 @@ class SignupPage extends HookConsumerWidget {
                 controller: emailInputController,
                 decoration: const InputDecoration(
                   labelText: 'Username',
+                  border: OutlineInputBorder(),
                 ),
               ),
               TextField(
                 controller: passwordInputController,
                 decoration: const InputDecoration(
                   labelText: 'Contrasena',
+                  border: OutlineInputBorder(),
                 ),
               ),
               ElevatedButton(
                 onPressed: handleSignup,
-                child: AppTypography.body(
+                child: const Text(
                   'Crear usuario',
-                  style: const TextStyle(fontWeight: FontWeight.w900),
                 ),
               ),
             ],

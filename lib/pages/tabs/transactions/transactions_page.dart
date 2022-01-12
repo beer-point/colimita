@@ -12,7 +12,7 @@ class TransactionsPage extends StatelessWidget {
       body: Center(
         child: ElevatedButton(
           onPressed: _goToBeer,
-          child: AppTypography.body('text'),
+          child: Text('text'),
         ),
       ),
     );

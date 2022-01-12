@@ -1,3 +1,4 @@
+import 'package:colimita/pages/auth/use_auth_controller.dart';
 import 'package:colimita/pages/auth/use_auth_state.dart';
 import 'package:colimita/widgets/app_typography.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +8,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 class SplashPage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // final authController = useAuthController(ref);
+    // authController.signOut();
     useRedirectToInitialRoute(context, ref);
     return Scaffold(
         body: Center(child: AppTypography.title('splash screen :D')));

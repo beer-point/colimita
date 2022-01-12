@@ -32,9 +32,8 @@ class SocialSignInButton extends StatelessWidget {
       margin: EdgeInsets.only(top: 16),
       child: ElevatedButton(
         onPressed: onPress,
-        child: AppTypography.body(
+        child: Text(
           'Ingresa con ${getButtonLabel()}',
-          style: TextStyle(fontWeight: FontWeight.w900),
         ),
       ),
     );
