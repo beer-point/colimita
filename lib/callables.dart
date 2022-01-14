@@ -7,3 +7,11 @@ HttpsCallable syncWithStation =
 HttpsCallable recharge =
     FirebaseFunctions.instanceFor(region: 'southamerica-east1')
         .httpsCallable('recharge');
+
+HttpsCallable getCards =
+    FirebaseFunctions.instanceFor(region: 'southamerica-east1')
+        .httpsCallable('getCards');
+
+HttpsCallable saveCard =
+    FirebaseFunctions.instanceFor(region: 'southamerica-east1')
+        .httpsCallable('saveCard');

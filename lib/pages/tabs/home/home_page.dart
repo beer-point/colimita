@@ -33,7 +33,7 @@ class HomePage extends ConsumerWidget {
                         child: FittedBox(
                           fit: BoxFit.contain,
                           child: Text(
-                            '\$ ${user!.balance.toString()}',
+                            '\$${user!.balance.toString()}',
                             style: const TextStyle(fontSize: 400.0),
                           ),
                         ),

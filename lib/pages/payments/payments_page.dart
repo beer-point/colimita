@@ -1,6 +1,5 @@
-import 'package:colimita/callables.dart';
 import 'package:colimita/pages/payments/filled_in_beer_custom_painter.dart';
-import 'package:colimita/pages/payments/payments_mercadopago_webview.dart';
+import 'package:colimita/providers/purchase_provider.dart';
 import 'package:colimita/widgets/app_typography.dart';
 import 'package:colimita/widgets/loading_full_body.dart';
 import 'package:flutter/material.dart';
@@ -13,10 +12,13 @@ class PaymentsPage extends HookConsumerWidget {
     final isRecharging = useState(false);
 
     Future<void> handleRecharge(num value) async {
-      isRecharging.value = true;
-      await recharge({"value": value});
-      isRecharging.value = false;
-      Navigator.pop(context);
+      ref.read(purchaseProvider.notifier).setAmount(value);
+
+      Navigator.pushNamed(
+        context,
+        '/payments/select-payment-method',
+        arguments: value,
+      );
     }
 
     if (isRecharging.value) {

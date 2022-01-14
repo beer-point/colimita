@@ -5,35 +5,36 @@ class AppTheme {
   const AppTheme();
 
   static ThemeData lightTheme = ThemeData(
-      primaryColor: Colors.white,
-      colorScheme: const ColorScheme.light().copyWith(
-        primary: Colors.amber[800],
-        secondary: Colors.white,
-        secondaryVariant: Colors.amber,
+    primaryColor: Colors.white,
+    toggleableActiveColor: Colors.amber,
+    colorScheme: const ColorScheme.light().copyWith(
+      primary: Colors.amber[800],
+      secondary: Colors.white,
+      secondaryVariant: Colors.amber,
+    ),
+    fontFamily: GoogleFonts.roboto().fontFamily,
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        textStyle:
+            const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
+        primary: Colors.amber,
       ),
-      fontFamily: GoogleFonts.roboto().fontFamily,
-      elevatedButtonTheme: ElevatedButtonThemeData(
-        style: ElevatedButton.styleFrom(
-          textStyle:
-              const TextStyle(color: Colors.white, fontWeight: FontWeight.w700),
-          primary: Colors.amber,
-        ),
-      ),
-      iconTheme: const IconThemeData(size: 32),
-      textTheme: const TextTheme(
-        button: TextStyle(color: Colors.white),
-        headline1: TextStyle(color: Colors.black),
-        headline4: TextStyle(color: Colors.black),
-        headline6: TextStyle(color: Colors.black),
-        bodyText1: TextStyle(color: Colors.black),
-      ),
-      buttonTheme: ButtonThemeData(
-        buttonColor: Colors.amber,
-      )
-      //   padding: EdgeInsets.all(20),
-      //   textTheme:ButtonTextTheme.primary
-      // ),
-      );
+    ),
+    iconTheme: const IconThemeData(size: 32),
+    textTheme: const TextTheme(
+      button: TextStyle(color: Colors.white),
+      headline1: TextStyle(color: Colors.black),
+      headline4: TextStyle(color: Colors.black),
+      headline6: TextStyle(color: Colors.black),
+      bodyText1: TextStyle(color: Colors.black),
+    ),
+    buttonTheme: ButtonThemeData(
+      buttonColor: Colors.amber,
+    ),
+    //   padding: EdgeInsets.all(20),
+    //   textTheme:ButtonTextTheme.primary
+    // ),
+  );
 
   static ThemeData darkTheme = ThemeData(
     primaryColor: Colors.black,

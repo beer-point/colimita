@@ -1,5 +1,6 @@
 import 'package:colimita/domain/beer.dart';
 import 'package:colimita/widgets/app_typography.dart';
+import 'package:colimita/widgets/back_button_row.dart';
 import 'package:flutter/material.dart';
 
 class BeerPage extends StatelessWidget {
@@ -11,9 +12,7 @@ class BeerPage extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Row(
-              children: const [BackButton()],
-            ),
+            BackButtonRow(),
             Container(
               width: 180,
               height: 180,

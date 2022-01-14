@@ -1,6 +1,7 @@
 import 'package:colimita/pages/auth/use_auth_controller.dart';
 import 'package:colimita/providers/user_provider.dart';
 import 'package:colimita/widgets/app_typography.dart';
+import 'package:colimita/widgets/back_button_row.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -21,9 +22,7 @@ class ProfilePage extends HookConsumerWidget {
           children: [
             Column(
               children: [
-                Row(
-                  children: const [BackButton()],
-                ),
+                BackButtonRow(),
                 Center(
                   child: AppTypography.title('${user?.name}'),
                 ),

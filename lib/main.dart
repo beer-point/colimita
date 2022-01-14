@@ -3,7 +3,12 @@ import 'package:colimita/pages/auth/login/login_page.dart';
 import 'package:colimita/pages/auth/signup/signup_page.dart';
 import 'package:colimita/pages/beer/beer_page.dart';
 import 'package:colimita/pages/map/map_page.dart';
+import 'package:colimita/pages/payments/add_card_page.dart';
+import 'package:colimita/pages/payments/create_card_token_page.dart';
 import 'package:colimita/pages/payments/payments_page.dart';
+import 'package:colimita/pages/payments/purchase_page.dart';
+import 'package:colimita/pages/payments/select_payment_page.dart';
+import 'package:colimita/pages/payments/validate_card_page.dart';
 import 'package:colimita/pages/profile/profile_page.dart';
 import 'package:colimita/pages/sessions/session_page.dart';
 import 'package:colimita/pages/splash_page.dart';
@@ -86,6 +91,11 @@ class BaseApp extends HookWidget {
       '/profile': (context) => ProfilePage(),
       '/session': (context) => SessionPage(),
       '/transaction': (context) => TransactionPage(),
+      '/payments/add-card': (context) => AddCardPage(),
+      '/payments/select-payment-method': (context) => SelectPaymentPage(),
+      '/payments/validate-card': (context) => ValidateCardPage(),
+      '/payments/create-card-token': (context) => CreateCardTokenPage(),
+      '/payments/purchase': (context) => PurchasePage(),
     };
   }
 }
