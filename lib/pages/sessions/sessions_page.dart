@@ -31,7 +31,10 @@ class _SessionsPage extends StatelessWidget {
         itemCount: sessions.size,
         itemBuilder: (context, index) {
           final session = sessions[index];
-          return _SessionListItem(session);
+          return Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: _SessionListItem(session),
+          );
         });
   }
 }

@@ -1,5 +1,6 @@
 import 'package:colimita/providers/user_provider.dart';
 import 'package:colimita/widgets/app_typography.dart';
+import 'package:colimita/widgets/b_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -10,15 +11,32 @@ class HomePage extends ConsumerWidget {
       Navigator.pushNamed(context, '/payments');
     }
 
+    void handleGoToProfile() {
+      Navigator.pushNamed(context, '/profile');
+    }
+
+    void handleGoToMap() {
+      Navigator.pushNamed(context, '/map');
+    }
+
     final user = ref.watch(userProvider);
     return Scaffold(
+      appBar: BAppBar(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        leading: IconButton(
+          iconSize: 32,
+          icon: const Icon(Icons.map_outlined),
+          onPressed: handleGoToMap,
+        ),
+        secondaryAction: IconButton(
+          iconSize: 32,
+          icon: const Icon(Icons.person_outline),
+          onPressed: handleGoToProfile,
+        ),
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: _TopBar(),
-            ),
             Expanded(
               child: Center(
                 child: Column(
@@ -61,35 +79,6 @@ class HomePage extends ConsumerWidget {
           ],
         ),
       ),
-    );
-  }
-}
-
-class _TopBar extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    void handleGoToProfile() {
-      Navigator.pushNamed(context, '/profile');
-    }
-
-    void handleGoToMap() {
-      Navigator.pushNamed(context, '/map');
-    }
-
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        IconButton(
-          iconSize: 32,
-          icon: const Icon(Icons.map_outlined),
-          onPressed: handleGoToMap,
-        ),
-        IconButton(
-          iconSize: 32,
-          icon: const Icon(Icons.person_outline),
-          onPressed: handleGoToProfile,
-        ),
-      ],
     );
   }
 }

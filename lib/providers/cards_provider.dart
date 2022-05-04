@@ -10,8 +10,14 @@ final cardsProvider =
   },
 );
 
-class CardsStateNotifier
-    extends StateNotifier<AsyncValue<KtList<PaymentCard>>> {
+abstract class CardsNotifier {
+  Future<void> refetchCards();
+  Future<void> saveCard(String token);
+  Future<void> removeCard(String cardId);
+}
+
+class CardsStateNotifier extends StateNotifier<AsyncValue<KtList<PaymentCard>>>
+    implements CardsNotifier {
   CardsStateNotifier() : super(const AsyncLoading()) {
     _getCards().then((cards) {
       state = AsyncData(cards);
@@ -43,12 +49,18 @@ class CardsStateNotifier
   }
 
   Future<void> saveCard(String token) async {
-    await callables.saveCard({"cardToken": token});
+    await callables.saveCard({"token": token});
     await refetchCards();
   }
 
   @override
   void dispose() {
     super.dispose();
+  }
+
+  @override
+  Future<void> removeCard(String cardId) {
+    // TODO: implement removeCard
+    throw UnimplementedError();
   }
 }

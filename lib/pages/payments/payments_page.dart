@@ -1,6 +1,7 @@
 import 'package:colimita/pages/payments/filled_in_beer_custom_painter.dart';
 import 'package:colimita/providers/purchase_provider.dart';
 import 'package:colimita/widgets/app_typography.dart';
+import 'package:colimita/widgets/b_app_bar.dart';
 import 'package:colimita/widgets/loading_full_body.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -27,13 +28,13 @@ class PaymentsPage extends HookConsumerWidget {
     }
 
     return Scaffold(
+      appBar: BAppBar(title: '¡Paga por lo que tomas!'),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: Center(
             child: Column(
               children: [
-                AppTypography.title('¡Pre-paga por lo que vas a tomar!'),
                 const SizedBox(height: 32),
                 _PrepayValueCard(200, handleRecharge),
                 const SizedBox(height: 32),

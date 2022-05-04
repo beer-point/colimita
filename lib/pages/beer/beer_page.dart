@@ -1,6 +1,6 @@
 import 'package:colimita/domain/beer.dart';
 import 'package:colimita/widgets/app_typography.dart';
-import 'package:colimita/widgets/back_button_row.dart';
+import 'package:colimita/widgets/b_app_bar.dart';
 import 'package:flutter/material.dart';
 
 class BeerPage extends StatelessWidget {
@@ -9,10 +9,10 @@ class BeerPage extends StatelessWidget {
     Beer beer = ModalRoute.of(context)?.settings.arguments as Beer;
 
     return Scaffold(
+      appBar: BAppBar(),
       body: SafeArea(
         child: Column(
           children: [
-            BackButtonRow(),
             Container(
               width: 180,
               height: 180,

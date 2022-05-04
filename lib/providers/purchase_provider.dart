@@ -1,34 +1,55 @@
 import 'package:colimita/callables.dart' as callables;
+import 'package:colimita/pages/payments/card_model.dart';
+import 'package:colimita/pages/payments/card_verification_model.dart';
+import 'package:colimita/providers/cards_provider.dart';
+import 'package:colimita/providers/ongoing_purchase.dart';
+import 'package:dartz/dartz.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
-class OngoingPurchase {
-  num amount;
-  AsyncValue<bool> purchase;
-
-  OngoingPurchase({required this.amount, required this.purchase});
-}
 
 final purchaseProvider =
     StateNotifierProvider<PurchaseStateNotifier, OngoingPurchase>(
   (ref) {
-    return PurchaseStateNotifier();
+    final cardsNotifier = ref.watch(cardsProvider.notifier);
+    return PurchaseStateNotifier(cardsNotifier);
   },
 );
 
 class PurchaseStateNotifier extends StateNotifier<OngoingPurchase> {
-  PurchaseStateNotifier()
-      : super(OngoingPurchase(
-          amount: 0,
-          purchase: AsyncLoading(),
-        ));
+  CardsNotifier cardsNotifier;
+  PurchaseStateNotifier(this.cardsNotifier)
+      : super(
+          OngoingPurchase(
+            amount: 0,
+            purchase: const AsyncLoading(),
+            saveCard: false,
+          ),
+        );
 
   void setAmount(num amount) {
-    print("SETTING AMOUNT!!!");
-    state = OngoingPurchase(amount: amount, purchase: state.purchase);
+    state = state.copyWith(
+      amount: amount,
+    );
   }
 
-  Future<void> purchase(String cardToken) async {
-    final resp =
-        callables.recharge({"value": state.amount, "cardToken": cardToken});
+  void setSaveCard({bool saveCard = true}) {
+    state = state.copyWith(saveCard: saveCard);
+  }
+
+  void setEitherCardOrVerification(
+      Either<CardModel, CardVerificationModel> eitherCardOrverification) {
+    state = state.copyWith(
+      eitherCardOrVerification: eitherCardOrverification,
+    );
+  }
+
+  Future<dynamic> purchase(String cardToken) async {
+    if (state.saveCard) {
+      cardsNotifier.saveCard(cardToken);
+    }
+    final resp = await callables.recharge({
+      "value": state.amount,
+      "cardToken": cardToken,
+    });
+    return resp.data;
   }
 }

@@ -35,7 +35,6 @@ class _SelectPaymentPage extends HookConsumerWidget {
 
     void handleGoToAddCardForm() {
       Navigator.pushNamed(context, '/payments/add-card');
-      // Navigator.pushNamed(context, '/payments/create-card-token');
     }
 
     void handleContinue() {

@@ -1,7 +1,6 @@
 import 'package:colimita/pages/auth/use_auth_controller.dart';
 import 'package:colimita/providers/user_provider.dart';
-import 'package:colimita/widgets/app_typography.dart';
-import 'package:colimita/widgets/back_button_row.dart';
+import 'package:colimita/widgets/b_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -16,24 +15,18 @@ class ProfilePage extends HookConsumerWidget {
     }
 
     return Scaffold(
+      appBar: BAppBar(title: user?.name),
       body: SafeArea(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Column(
-              children: [
-                BackButtonRow(),
-                Center(
-                  child: AppTypography.title('${user?.name}'),
-                ),
-              ],
-            ),
             Center(
               child: ElevatedButton(
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red)),
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                ),
                 onPressed: handleSignout,
-                child: Text('Cerrar session'),
+                child: const Text('Cerrar session'),
               ),
             ),
           ],
